@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Pictures">
+        <file>Pictures/ohm2.png</file>
+        <file>Pictures/pythagoras.png</file>
+        <file>Pictures/Cosine.jpg</file>
+        <file>Pictures/Cotangent.jpg</file>
+        <file>Pictures/Sine.jpg</file>
+        <file>Pictures/Tangent.jpg</file>
+    </qresource>
+</RCC>
