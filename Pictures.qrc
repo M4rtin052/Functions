@@ -6,5 +6,7 @@
         <file>Pictures/Cotangent.jpg</file>
         <file>Pictures/Sine.jpg</file>
         <file>Pictures/Tangent.jpg</file>
+        <file>Pictures/Circle_obw.png</file>
+        <file>Pictures/Circle_pol.png</file>
     </qresource>
 </RCC>
