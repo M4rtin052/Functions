@@ -18,15 +18,29 @@ public:
 
 private slots:
     // Pythagoras
-    void on_firstBox_valueChanged(double value);
-    void on_thirdBox_valueChanged(double value);
-    void on_fifthBox_valueChanged(double value);
+    void firstClick();
+    void resetP();
+    void firstClick_4();
+    void resetP_4();
+    void firstClick_3();
+    void resetP_3();
+
     // Trigonometry
     void on_Degrees_valueChanged(double value);
+
+    // Circle
+    void pushButton_7();
+    void pushButton_8();
+
     // R/I/U
-    void on_intensity_valueChanged(double value);
-    void on_tension_valueChanged(double value);
-    void on_tension2_valueChanged(double value);
+    void pushButton();
+    void pushButton_2();
+    void pushButton_5();
+    void pushButton_6();
+    void pushButton_3();
+    void pushButton_4();
+
+
 private:
     Ui::MainWindow *ui;
 };
