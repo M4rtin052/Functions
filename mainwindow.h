@@ -17,6 +17,18 @@ public:
     ~MainWindow();
 
 private slots:
+    double firstClick_math();
+    double firstClick_4_math();
+    double firstClick_3_math();
+    double sine_math(double value);
+    double cosine_math(double value);
+    double tang_math(double value);
+    double cotang_math(double value);
+    double circle_field();
+    double circle_obw();
+    double R_math();
+    double I_math();
+    double U_math();
     // Pythagoras
     void firstClick();
     void resetP();
@@ -26,7 +38,7 @@ private slots:
     void resetP_3();
 
     // Trigonometry
-    void on_Degrees_valueChanged(double value);
+    double on_Degrees_valueChanged(double value);
 
     // Circle
     void pushButton_7();
