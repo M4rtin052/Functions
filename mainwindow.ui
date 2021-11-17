@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Pythagoras">
      <attribute name="title">
@@ -574,7 +574,7 @@
           <enum>QAbstractSpinBox::NoButtons</enum>
          </property>
          <property name="minimum">
-          <double>-1.000000000000000</double>
+          <double>-1000000.000000000000000</double>
          </property>
          <property name="maximum">
           <double>1000000.000000000000000</double>
@@ -646,7 +646,7 @@
      <attribute name="title">
       <string>Circle</string>
      </attribute>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -672,7 +672,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>190</x>
@@ -710,7 +710,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>30</x>
