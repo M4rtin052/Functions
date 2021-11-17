@@ -4,6 +4,9 @@
 #include <QPixmap>
 #include <QDoubleSpinBox>
 #include <QtMath>
+#include <QFile>
+#include <QTextStream>
+#include <cmath>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->CalculateP_3, SIGNAL(clicked()), this, SLOT(firstClick_3()));
     connect(ui->ResetP_3, SIGNAL(clicked()), this, SLOT(resetP_3()));
+
 //  Trigonometry
 
     QPixmap sine(":/Pictures/Pictures/Sine.jpg");
@@ -65,14 +69,31 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 // Pythagoras
-void MainWindow::firstClick()
+double MainWindow::firstClick_math()
 {
     double mult1 = (ui->firstBox->value() * ui->firstBox->value());
     double mult2 = (ui->secondBox->value() * ui->secondBox->value());
     double result1 = mult1 + mult2;
     qreal result = result1;
     qreal final = qSqrt(result);
-    ui->label->setText(QString::number(final));
+    return final;
+}
+void MainWindow::firstClick()
+{
+    double x = firstClick_math();
+    double c = firstClick_4_math();
+    double b = firstClick_3_math();
+    ui->label->setText(QString::number(x));
+    QFile::remove("Results.txt");
+    QFile file("Results.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream results(&file);
+        results << "c = " << x << "\n" << "b = " << c << "\n" << "a = " << b << "\n";
+
+        file.close();
+        qDebug() << "Writing finished";
+    }
 }
 
 void MainWindow::resetP()
@@ -82,14 +103,32 @@ void MainWindow::resetP()
     ui->label->setText(QString::number(0));
 }
 
-void MainWindow::firstClick_4()
+double MainWindow::firstClick_4_math()
 {
     double mult1 = (ui->thirdBox->value() * ui->thirdBox->value());
     double mult2 = (ui->fourthBox->value() * ui->fourthBox->value());
     double result1 = mult2 - mult1;
     qreal result = result1;
     qreal final = qSqrt(result);
-    ui->label_4->setText(QString::number(final));
+    return final;
+}
+
+void MainWindow::firstClick_4()
+{
+    double x = firstClick_math();
+    double c = firstClick_4_math();
+    double b = firstClick_3_math();
+    ui->label_4->setText(QString::number(c));
+    QFile::remove("Results.txt");
+    QFile file("Results.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream results(&file);
+        results << "c = " << x << "\n" << "b = " << c << "\n" << "a = " << b << "\n";
+
+        file.close();
+        qDebug() << "Writing finished";
+    }
 }
 
 void MainWindow::resetP_4()
@@ -98,14 +137,33 @@ void MainWindow::resetP_4()
     ui->fourthBox->setValue(0);
     ui->label_4->setText(QString::number(0));
 }
-void MainWindow::firstClick_3()
+
+double MainWindow::firstClick_3_math()
 {
     double mult1 = (ui->fifthBox->value() * ui->fifthBox->value());
     double mult2 = (ui->sixthBox->value() * ui->sixthBox->value());
     double result1 = mult2 - mult1;
     qreal result = result1;
     qreal final = qSqrt(result);
-    ui->label_3->setText(QString::number(final));
+    return final;
+}
+
+void MainWindow::firstClick_3()
+{
+    double x = firstClick_math();
+    double c = firstClick_4_math();
+    double b = firstClick_3_math();
+    ui->label_3->setText(QString::number(b));
+    QFile::remove("Results.txt");
+    QFile file("Results.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream results(&file);
+        results << "c = " << x << "\n" << "b = " << c << "\n" << "a = " << b << "\n";
+
+        file.close();
+        qDebug() << "Writing finished";
+    }
 }
 
 void MainWindow::resetP_3()
@@ -115,77 +173,156 @@ void MainWindow::resetP_3()
     ui->label_3->setText(QString::number(0));
 }
 
+
 // Trigonometry
-void MainWindow::on_Degrees_valueChanged(double value)
+double MainWindow::sine_math(double value)
 {
     double deg = value;
     double rad = qDegreesToRadians(deg);
+    qreal sine = rad;
+    qreal sineRes = qSin(sine);
+    sineRes *= 100;
+    sineRes = qRound(sineRes);
+    sineRes /= 100;
+    return sineRes;
+}
+double MainWindow::cosine_math(double value)
+{
+    double deg = value;
+    double rad = qDegreesToRadians(deg);
+    qreal cosine = rad;
+    qreal cosineRes = qCos(cosine);
+    cosineRes *= 100;
+    cosineRes = qRound(cosineRes);
+    cosineRes /= 100;
+    return cosineRes;
+}
+double MainWindow::tang_math(double value)
+{
+    double deg = value;
+    double rad = qDegreesToRadians(deg);
+    qreal tan = rad;
+    qreal tanRes = qTan(tan);
+    return tanRes;
+}
+double MainWindow::cotang_math(double value)
+{
+    double deg = value;
+    double rad = qDegreesToRadians(deg);
+    qreal cotan = rad;
+    qreal cotanRes = (1 / qTan(cotan));
+    return cotanRes;
+}
+double MainWindow::on_Degrees_valueChanged(double value)
+{
+    double x = sine_math(value);
+    double c = cosine_math(value);
+    double b = tang_math(value);
+    double a = cotang_math(value);
 
     // Sine
-    if (value == 0 || value == 180 || value == 360)
-    {
-        ui->sineRes->setText("0");
-    }
-    else
-    {
-        qreal sine = rad;
-        qreal sineRes = qSin(sine);
-        ui->sineRes->setText(QString::number(sineRes));
-    }
+        ui->sineRes->setText(QString::number(x));
+        QFile::remove("Results.txt");
+        QFile sine("Results.txt");
+        if (sine.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream results(&sine);
+            results << "sine = " << x << "\n" << "cosine = " << c << "\n" << "tangen = " << b << "\n" << "cotangen = " << a << "\n";
+
+            sine.close();
+            qDebug() << "Writing finished";
+        }
+
 
     // Cosine
-    if (value == 90 || value == 270 || value == 450)
-    {
-        ui->cosRes->setText("0");
-    }
-    else
-    {
-        qreal cosine = rad;
-        qreal cosineRes = qCos(cosine);
-        ui->cosRes->setText(QString::number(cosineRes));
-    }
+        ui->cosRes->setText(QString::number(c));
+        QFile::remove("Results.txt");
+        QFile cosine("Results.txt");
+        if (cosine.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream results(&cosine);
+            results << "sine = " << x << "\n" << "cosine = " << c << "\n" << "tangen = " << b << "\n" << "cotangen = " << a << "\n";
+
+            cosine.close();
+            qDebug() << "Writing finished";
+        }
 
     // Tangent
-    if (value == 90 || value == 270 || value == 450)
-    {
-        ui->tanRes->setText("Tangent doesn't exist.");
-    }
-    else if (value == 0 || value == 180 || value == 360)
-    {
-        ui->tanRes->setText("0");
-    }
-    else
-    {
-        qreal tan = rad;
-        qreal tanRes = qTan(tan);
-        ui->tanRes->setText(QString::number(tanRes));
-    }
+        double reszta = fmod(value, 90);
+        double reszta1 = fmod ((value / 90), 2);
+        if (reszta == 0)
+        {
+            if (reszta1 == 0)
+            {
+                ui->tanRes->setText(QString::number(0));
+                ui->cotanRes->setText("Cotangent doesn't exist");
+                return 0;
+            }
+            else
+            {
+                ui->tanRes->setText("Tangent doesn't exist");
+                ui->cotanRes->setText(QString::number(0));
+                return 0;
+            }
+        }
+        else
+        {
+            ui->tanRes->setText(QString::number(b, 'f', 2));
+            ui->cotanRes->setText(QString::number(a, 'f', 2));
+            return 0;
+        }
+        QFile::remove("Results.txt");
+        QFile tang("Results.txt");
+        if (tang.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream results(&tang);
+            results << "sine = " << x << "\n" << "cosine = " << c << "\n" << "tangen = " << b << "\n" << "cotangen = " << a << "\n";
+
+            tang.close();
+            qDebug() << "Writing finished";
+        }
 
     // Cotangent
-    if (value == 0 || value == 180 || value == 360)
-    {
-        ui->cotanRes->setText("Cotangent doesn't exist.");
-    }
-    else if (value == 90 || value == 270 || value == 450)
-    {
-        ui->cotanRes->setText("0");
-    }
-    else
-    {
-        qreal cotan = rad;
-        qreal cotanRes = (1 / qTan(cotan));
-        ui->cotanRes->setText(QString::number(cotanRes));
-    }
+        QFile::remove("Results.txt");
+        QFile file("Results.txt");
+        if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream results(&file);
+            results << "sine = " << x << "\n" << "cosine = " << c << "\n" << "tangen = " << b << "\n" << "cotangen = " << a << "\n";
+
+            file.close();
+            qDebug() << "Writing finished";
+        }
 }
 
-// Circle
 
-void MainWindow::pushButton_7()
+// Circle
+double MainWindow::circle_field()
 {
     double field = M_PI * ui->doubleSpinBox->value() * ui->doubleSpinBox->value();
+    return field;
+}
+double MainWindow::circle_obw()
+{
     double obw = 2 * M_PI * ui->doubleSpinBox->value();
+    return obw;
+}
+void MainWindow::pushButton_7()
+{
+    double field = circle_field();
+    double obw = circle_obw();
     ui->label_9->setText(QString::number(obw));
     ui->label_10->setText(QString::number(field));
+    QFile::remove("Results.txt");
+    QFile file("Results.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream results(&file);
+        results << "Field = " << field << "\n" << "Obw = " << obw << "\n";
+
+        file.close();
+        qDebug() << "Writing finished";
+    }
 }
 
 void MainWindow::pushButton_8()
@@ -196,7 +333,11 @@ void MainWindow::pushButton_8()
 }
 
 // R/I/U
-
+double MainWindow::R_math()
+{
+    double res = ui->tension->value() / ui->doubleSpinBox_2->value();
+    return res;
+}
 void MainWindow::pushButton()
 {
     if (ui->doubleSpinBox_2->value() == 0)
@@ -205,11 +346,22 @@ void MainWindow::pushButton()
     }
     else
     {
-        double res = ui->tension->value() / ui->doubleSpinBox_2->value();
+        double res = R_math();
+        double inten = I_math();
+        double elect = U_math();
         ui->label_5->setText(QString::number(res));
+        QFile::remove("Results.txt");
+        QFile file("Results.txt");
+        if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream results(&file);
+            results << "R = " << res << "\n" << "I = " << inten << "\n" << "U = " << elect << "\n";
+
+            file.close();
+            qDebug() << "Writing finished";
+        }
     }
 }
-
 void MainWindow:: pushButton_2()
 {
     ui->tension->setValue(0);
@@ -217,10 +369,28 @@ void MainWindow:: pushButton_2()
     ui->label_5->setText(QString::number(0));
 }
 
-void MainWindow::pushButton_5()
+
+double MainWindow::I_math()
 {
     double res = ui->intensity->value() * ui->doubleSpinBox_8->value();
-    ui->label_6->setText(QString::number(res));
+    return res;
+}
+void MainWindow::pushButton_5()
+{
+    double res = R_math();
+    double inten = I_math();
+    double elect = U_math();
+    ui->label_6->setText(QString::number(inten));
+    QFile::remove("Results.txt");
+    QFile file("Results.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream results(&file);
+        results << "R = " << res << "\n" << "I = " << inten << "\n" << "U = " << elect << "\n";
+
+        file.close();
+        qDebug() << "Writing finished";
+    }
 }
 
 void MainWindow::pushButton_6()
@@ -230,6 +400,12 @@ void MainWindow::pushButton_6()
     ui->label_6->setText(QString::number(0));
 }
 
+
+double MainWindow::U_math()
+{
+    double res = ui->tension2->value() / ui->doubleSpinBox_5->value();
+    return res;
+}
 void MainWindow::pushButton_3()
 {
     if (ui->doubleSpinBox_5->value() == 0)
@@ -238,8 +414,21 @@ void MainWindow::pushButton_3()
     }
     else
     {
-        double res = ui->tension2->value() / ui->doubleSpinBox_5->value();
-        ui->label_7->setText(QString::number(res));
+        double res = R_math();
+        double inten = I_math();
+        double elect = U_math();
+        ui->label_7->setText(QString::number(elect));
+        QFile::remove("Results.txt");
+        QFile file("Results.txt");
+        if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream results(&file);
+            results << "R = " << res << "\n" << "I = " << inten << "\n" << "U = " << elect << "\n";
+
+            file.close();
+            qDebug() << "Writing finished";
+        }
+
     }
 }
 void MainWindow::pushButton_4()
@@ -253,5 +442,3 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
