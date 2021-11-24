@@ -69,27 +69,26 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 // Pythagoras
-double MainWindow::firstClick_math()
+double MainWindow::firstClick_math(double a, double b)
 {
-    double mult1 = (ui->firstBox->value() * ui->firstBox->value());
-    double mult2 = (ui->secondBox->value() * ui->secondBox->value());
-    double result1 = mult1 + mult2;
-    qreal result = result1;
+    double lengthC = (a*a) + (b*b);
+    qreal result = lengthC;
     qreal final = qSqrt(result);
     return final;
 }
 void MainWindow::firstClick()
 {
-    double x = firstClick_math();
-    double c = firstClick_4_math();
-    double b = firstClick_3_math();
-    ui->label->setText(QString::number(x));
+    double c = firstClick_math(ui->firstBox->value(), ui->secondBox->value());
+    double b = firstClick_4_math(ui->thirdBox->value(), ui->fourthBox->value());
+    double a = firstClick_3_math(ui->fifthBox->value(), ui->sixthBox->value());
+    ui->label->setText(QString::number(c)); // wyświetlenie w tabelce z wynikiem wartości obliczonej z funkcji "firstClick_math"
+    // Dalej w dół jest zapis do pliku, więc tego już nie musisz sprawdzać
     QFile::remove("Results.txt");
     QFile file("Results.txt");
     if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
     {
         QTextStream results(&file);
-        results << "c = " << x << "\n" << "b = " << c << "\n" << "a = " << b << "\n";
+        results << "c = " << c << "\n" << "b = " << b << "\n" << "a = " << a << "\n";
 
         file.close();
         qDebug() << "Writing finished";
@@ -103,28 +102,26 @@ void MainWindow::resetP()
     ui->label->setText(QString::number(0));
 }
 
-double MainWindow::firstClick_4_math()
+double MainWindow::firstClick_4_math(double a, double c)
 {
-    double mult1 = (ui->thirdBox->value() * ui->thirdBox->value());
-    double mult2 = (ui->fourthBox->value() * ui->fourthBox->value());
-    double result1 = mult2 - mult1;
-    qreal result = result1;
+    double lengthB = (c*c) - (a*a);
+    qreal result = lengthB;
     qreal final = qSqrt(result);
     return final;
 }
 
 void MainWindow::firstClick_4()
 {
-    double x = firstClick_math();
-    double c = firstClick_4_math();
-    double b = firstClick_3_math();
-    ui->label_4->setText(QString::number(c));
+    double c = firstClick_math(ui->firstBox->value(), ui->secondBox->value());
+    double b = firstClick_4_math(ui->thirdBox->value(), ui->fourthBox->value());
+    double a = firstClick_3_math(ui->fifthBox->value(), ui->sixthBox->value());
+    ui->label_4->setText(QString::number(b));
     QFile::remove("Results.txt");
     QFile file("Results.txt");
     if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
     {
         QTextStream results(&file);
-        results << "c = " << x << "\n" << "b = " << c << "\n" << "a = " << b << "\n";
+        results << "c = " << c << "\n" << "b = " << b << "\n" << "a = " << a << "\n";
 
         file.close();
         qDebug() << "Writing finished";
@@ -138,28 +135,26 @@ void MainWindow::resetP_4()
     ui->label_4->setText(QString::number(0));
 }
 
-double MainWindow::firstClick_3_math()
+double MainWindow::firstClick_3_math(double b, double c)
 {
-    double mult1 = (ui->fifthBox->value() * ui->fifthBox->value());
-    double mult2 = (ui->sixthBox->value() * ui->sixthBox->value());
-    double result1 = mult2 - mult1;
-    qreal result = result1;
+    double lengthC = (c*c) - (b*b);
+    qreal result = lengthC;
     qreal final = qSqrt(result);
     return final;
 }
 
 void MainWindow::firstClick_3()
 {
-    double x = firstClick_math();
-    double c = firstClick_4_math();
-    double b = firstClick_3_math();
-    ui->label_3->setText(QString::number(b));
+    double c = firstClick_math(ui->firstBox->value(), ui->secondBox->value());
+    double b = firstClick_4_math(ui->thirdBox->value(), ui->fourthBox->value());
+    double a = firstClick_3_math(ui->fifthBox->value(), ui->sixthBox->value());
+    ui->label_3->setText(QString::number(a));
     QFile::remove("Results.txt");
     QFile file("Results.txt");
     if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
     {
         QTextStream results(&file);
-        results << "c = " << x << "\n" << "b = " << c << "\n" << "a = " << b << "\n";
+        results << "c = " << c << "\n" << "b = " << b << "\n" << "a = " << a << "\n";
 
         file.close();
         qDebug() << "Writing finished";
@@ -297,20 +292,20 @@ double MainWindow::on_Degrees_valueChanged(double value)
 
 
 // Circle
-double MainWindow::circle_field()
+double MainWindow::circle_field(double a)
 {
-    double field = M_PI * ui->doubleSpinBox->value() * ui->doubleSpinBox->value();
+    double field = M_PI * a * a;
     return field;
 }
-double MainWindow::circle_obw()
+double MainWindow::circle_obw(double b)
 {
-    double obw = 2 * M_PI * ui->doubleSpinBox->value();
+    double obw = 2 * M_PI * b;
     return obw;
 }
 void MainWindow::pushButton_7()
 {
-    double field = circle_field();
-    double obw = circle_obw();
+    double field = circle_field(ui->doubleSpinBox->value());
+    double obw = circle_obw(ui->doubleSpinBox->value());
     ui->label_9->setText(QString::number(obw));
     ui->label_10->setText(QString::number(field));
     QFile::remove("Results.txt");
@@ -333,9 +328,9 @@ void MainWindow::pushButton_8()
 }
 
 // R/I/U
-double MainWindow::R_math()
+double MainWindow::R_math(double u, double r)
 {
-    double res = ui->tension->value() / ui->doubleSpinBox_2->value();
+    double res = u / r;
     return res;
 }
 void MainWindow::pushButton()
@@ -346,9 +341,9 @@ void MainWindow::pushButton()
     }
     else
     {
-        double res = R_math();
-        double inten = I_math();
-        double elect = U_math();
+        double res = R_math(ui->tension->value(), ui->doubleSpinBox_2->value());
+        double inten = I_math(ui->intensity->value(), ui->doubleSpinBox_8->value());
+        double elect = U_math(ui->tension2->value(), ui->doubleSpinBox_5->value());
         ui->label_5->setText(QString::number(res));
         QFile::remove("Results.txt");
         QFile file("Results.txt");
@@ -370,16 +365,16 @@ void MainWindow:: pushButton_2()
 }
 
 
-double MainWindow::I_math()
+double MainWindow::I_math(double i, double r)
 {
-    double res = ui->intensity->value() * ui->doubleSpinBox_8->value();
+    double res = i * r;
     return res;
 }
 void MainWindow::pushButton_5()
 {
-    double res = R_math();
-    double inten = I_math();
-    double elect = U_math();
+    double res = R_math(ui->tension->value(), ui->doubleSpinBox_2->value());
+    double inten = I_math(ui->intensity->value(), ui->doubleSpinBox_8->value());
+    double elect = U_math(ui->tension2->value(), ui->doubleSpinBox_5->value());
     ui->label_6->setText(QString::number(inten));
     QFile::remove("Results.txt");
     QFile file("Results.txt");
@@ -401,9 +396,9 @@ void MainWindow::pushButton_6()
 }
 
 
-double MainWindow::U_math()
+double MainWindow::U_math(double u, double i)
 {
-    double res = ui->tension2->value() / ui->doubleSpinBox_5->value();
+    double res = u / i;
     return res;
 }
 void MainWindow::pushButton_3()
@@ -414,9 +409,9 @@ void MainWindow::pushButton_3()
     }
     else
     {
-        double res = R_math();
-        double inten = I_math();
-        double elect = U_math();
+        double res = R_math(ui->tension->value(), ui->doubleSpinBox_2->value());
+        double inten = I_math(ui->intensity->value(), ui->doubleSpinBox_8->value());
+        double elect = U_math(ui->tension2->value(), ui->doubleSpinBox_5->value());
         ui->label_7->setText(QString::number(elect));
         QFile::remove("Results.txt");
         QFile file("Results.txt");
