@@ -17,18 +17,21 @@ public:
     ~MainWindow();
 
 private slots:
-    double firstClick_math();
-    double firstClick_4_math();
-    double firstClick_3_math();
+    double firstClick_math(double a, double b);
+    double firstClick_4_math(double a, double c);
+    double firstClick_3_math(double b, double c);
+
     double sine_math(double value);
     double cosine_math(double value);
     double tang_math(double value);
     double cotang_math(double value);
-    double circle_field();
-    double circle_obw();
-    double R_math();
-    double I_math();
-    double U_math();
+
+    double circle_field(double a);
+    double circle_obw(double b);
+
+    double R_math(double u, double r);
+    double I_math(double i, double r);
+    double U_math(double u, double i);
     // Pythagoras
     void firstClick();
     void resetP();
